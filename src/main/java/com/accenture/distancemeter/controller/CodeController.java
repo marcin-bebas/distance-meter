@@ -4,10 +4,7 @@ import com.accenture.distancemeter.bean.Code;
 import com.accenture.distancemeter.service.CodeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,7 +18,7 @@ public class CodeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Code>> getAllTodos() {
+    public ResponseEntity<List<Code>> getAllCodes() {
         List<Code> codes = codeService.getCodes();
         return new ResponseEntity<>(codes, HttpStatus.OK);
     }
@@ -29,6 +26,12 @@ public class CodeController {
     @GetMapping({"/{id}"})
     public ResponseEntity<Code> getTodo(@PathVariable Long id) {
         return new ResponseEntity<>(codeService.getCodeById(id), HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<Code> updateCode(@RequestBody Code code){
+        Code result = codeService.updateCode(code);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 }

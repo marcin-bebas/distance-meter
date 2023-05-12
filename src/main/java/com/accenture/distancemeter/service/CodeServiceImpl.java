@@ -31,13 +31,21 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public DistanceDTO getDistance(String code1, String code2) {
-        Code code01 = codeRepository.findByCode(code1);
-        Code code02 = codeRepository.findByCode(code2);
+        Code code01 = codeRepository.findByCode(code1).get();
+        Code code02 = codeRepository.findByCode(code2).get();
         DistanceDTO result = DistanceDTO.builder()
                 .location1(code01)
                 .location2(code02)
                 .distance(DistanceCalculator.calculateDistance(code01.getLatitude(), code01.getLongitude(), code02.getLatitude(), code02.getLongitude()))
                 .build();
         return result;
+    }
+
+    @Override
+    public Code updateCode(Code code) {
+        Code codeDB = codeRepository.findByCode(code.getCode()).get();
+        codeDB.setLatitude(code.getLatitude());
+        codeDB.setLongitude(code.getLongitude());
+        return codeRepository.save(codeDB);
     }
 }

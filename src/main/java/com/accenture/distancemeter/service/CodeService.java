@@ -11,4 +11,6 @@ public interface CodeService {
     Code getCodeById(Long id);
 
     DistanceDTO getDistance(String code1, String code2);
+
+    Code updateCode(Code code);
 }

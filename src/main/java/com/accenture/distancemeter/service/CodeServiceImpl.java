@@ -20,7 +20,6 @@ public class CodeServiceImpl implements CodeService {
     @Override
     public List<Code> getCodes() {
         List<Code> codes = new ArrayList<>();
-        // codeRepository.findAll().forEach(code -> codes.add(code));
         codeRepository.findAll().forEach(codes::add);
         return codes;
     }

@@ -21,9 +21,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/api/v1/**","/api/v1/code", "/api/v1/code/**").permitAll()
-//                        .requestMatchers(HttpMethod.PUT).permitAll()
-//                        .requestMatchers(HttpMethod.PUT,"/api/v1/**").permitAll()
+                        .requestMatchers("/api/v1/code", "/api/v1/code/**").permitAll()
                         .requestMatchers("/api/v1/distance").hasRole("USER")
                         .anyRequest().authenticated()
                 )

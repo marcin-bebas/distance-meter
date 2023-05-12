@@ -2,6 +2,8 @@ package com.accenture.distancemeter.controller;
 
 import com.accenture.distancemeter.bean.Code;
 import com.accenture.distancemeter.service.CodeService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +21,8 @@ public class CodeController {
 
     @GetMapping
     public ResponseEntity<List<Code>> getAllCodes() {
-        List<Code> codes = codeService.getCodes();
+        Pageable paging = PageRequest.of(0, 100);
+        List<Code> codes = codeService.getCodes(paging);
         return new ResponseEntity<>(codes, HttpStatus.OK);
     }
 

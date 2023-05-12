@@ -3,6 +3,7 @@ package com.accenture.distancemeter.service;
 import com.accenture.distancemeter.bean.Code;
 import com.accenture.distancemeter.dto.DistanceDTO;
 import com.accenture.distancemeter.repository.CodeRepository;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,9 +19,11 @@ public class CodeServiceImpl implements CodeService {
     }
 
     @Override
-    public List<Code> getCodes() {
+    public List<Code> getCodes(Pageable paging) {
+
         List<Code> codes = new ArrayList<>();
-        codeRepository.findAll().forEach(codes::add);
+
+        codeRepository.findAll(paging).forEach(codes::add);
         return codes;
     }
 

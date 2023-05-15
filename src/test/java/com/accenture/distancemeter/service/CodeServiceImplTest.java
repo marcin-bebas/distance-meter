@@ -23,11 +23,14 @@ public class CodeServiceImplTest {
 
     @Mock
     private CodeRepository codeRepository;
+    @Mock
+    private DistanceCalculatorImpl distanceCalculator;
 
     @BeforeEach
     public void setup() {
         codeRepository = Mockito.mock(CodeRepository.class);
-        codeService = new CodeServiceImpl(codeRepository);
+        distanceCalculator = Mockito.mock(DistanceCalculatorImpl.class);
+        codeService = new CodeServiceImpl(codeRepository, distanceCalculator);
     }
 
     @Test
@@ -66,9 +69,8 @@ public class CodeServiceImplTest {
 
         Mockito.when(codeRepository.findByCode(code1)).thenReturn(Optional.of(code01));
         Mockito.when(codeRepository.findByCode(code2)).thenReturn(Optional.of(code02));
-        Mockito.mockStatic(DistanceCalculator.class);
 
-        Mockito.when(DistanceCalculator.calculateDistance(code01.getLatitude(), code01.getLongitude(), code02.getLatitude(), code02.getLongitude())).thenReturn(expectedDistance);
+        Mockito.when(distanceCalculator.calculateDistance(code01.getLatitude(), code01.getLongitude(), code02.getLatitude(), code02.getLongitude())).thenReturn(expectedDistance);
 
         DistanceDTO distanceDTO = codeService.getDistance(code1, code2);
 

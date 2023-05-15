@@ -13,9 +13,11 @@ import java.util.List;
 public class CodeServiceImpl implements CodeService {
 
     private CodeRepository codeRepository;
+    private DistanceCalculator distanceCalculator;
 
-    public CodeServiceImpl(CodeRepository codeRepository) {
+    public CodeServiceImpl(CodeRepository codeRepository, DistanceCalculator distanceCalculator) {
         this.codeRepository = codeRepository;
+        this.distanceCalculator = distanceCalculator;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class CodeServiceImpl implements CodeService {
         DistanceDTO result = DistanceDTO.builder()
                 .location1(code01)
                 .location2(code02)
-                .distance(DistanceCalculator.calculateDistance(code01.getLatitude(), code01.getLongitude(), code02.getLatitude(), code02.getLongitude()))
+                .distance(distanceCalculator.calculateDistance(code01.getLatitude(), code01.getLongitude(), code02.getLatitude(), code02.getLongitude()))
                 .build();
         return result;
     }

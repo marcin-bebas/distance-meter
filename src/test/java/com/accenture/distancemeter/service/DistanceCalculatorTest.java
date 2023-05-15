@@ -1,11 +1,20 @@
 package com.accenture.distancemeter.service;
 
-import com.accenture.distancemeter.service.DistanceCalculator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DistanceCalculatorTest {
+
+    @Mock
+    private DistanceCalculatorImpl distanceCalculator;
+    @BeforeEach
+    public void setup() {
+        distanceCalculator = Mockito.mock(DistanceCalculatorImpl.class);
+    }
 
     @Test
     public void testCalculateDistance() {
@@ -15,7 +24,7 @@ public class DistanceCalculatorTest {
         double longitude2 = 3.456;
         double expectedDistance = 135.07;
 
-        double distance = DistanceCalculator.calculateDistance(latitude1, longitude1, latitude2, longitude2);
+        double distance = distanceCalculator.calculateDistance(latitude1, longitude1, latitude2, longitude2);
 
         assertEquals(expectedDistance, distance, 0.01); // Allow a small delta for floating-point precision
     }
@@ -26,7 +35,7 @@ public class DistanceCalculatorTest {
         double degree2 = 4.56;
         double expectedValue = 0.991;
 
-        double result = DistanceCalculator.haversine(degree1, degree2);
+        double result = DistanceCalculatorImpl.haversine(degree1, degree2);
 
         assertEquals(expectedValue, result, 0.001); // Allow a small delta for floating-point precision
     }
@@ -36,7 +45,7 @@ public class DistanceCalculatorTest {
         double x = 2.5;
         double expectedValue = 6.25;
 
-        double result = DistanceCalculator.square(x);
+        double result = DistanceCalculatorImpl.square(x);
 
         assertEquals(expectedValue, result, 0.01); // Allow a small delta for floating-point precision
     }

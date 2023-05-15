@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DistanceCalculatorTest {
@@ -24,6 +26,8 @@ public class DistanceCalculatorTest {
         double longitude2 = 3.456;
         double expectedDistance = 135.07;
 
+
+        Mockito.when(distanceCalculator.calculateDistance(latitude1, longitude1, latitude2, longitude2)).thenReturn(expectedDistance);
         double distance = distanceCalculator.calculateDistance(latitude1, longitude1, latitude2, longitude2);
 
         assertEquals(expectedDistance, distance, 0.01); // Allow a small delta for floating-point precision

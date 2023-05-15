@@ -24,7 +24,7 @@ public class CodeLoader implements CommandLineRunner {
         loadCodes();
     }
 
-    private void loadCodes() {
+    public void loadCodes() {
         if (codeRepository.count() == 0) {
             System.out.println("Sample loading...");
             long start = System.nanoTime();

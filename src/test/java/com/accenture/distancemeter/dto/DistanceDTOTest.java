@@ -1,15 +1,13 @@
 package com.accenture.distancemeter.dto;
 
 import com.accenture.distancemeter.bean.Code;
-import com.accenture.distancemeter.dto.DistanceDTO;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @JsonTest
 public class DistanceDTOTest {
 
@@ -31,8 +29,8 @@ public class DistanceDTOTest {
 
         assertThat(this.json.write(distanceDTO)).isEqualToJson(expectedJson);
         // Or use JSON path based assertions
-//        assertThat(this.json.write(distanceDTO)).hasJsonPathStringValue("@.location1");
-//        assertThat(this.json.write(distanceDTO)).extractingJsonPathStringValue("@.make").isEqualTo("Honda");
+//        assertThat(this.json.write(distanceDTO)).hasJsonPathStringValue("@.distance");
+//        assertThat(this.json.write(distanceDTO)).extractingJsonPathStringValue("@.distance").isEqualTo(10.5);
 
 //        ObjectMapper objectMapper = new ObjectMapper();
 //        String json = objectMapper.writeValueAsString(distanceDTO);
@@ -49,7 +47,7 @@ public class DistanceDTOTest {
                 .isEqualTo(new DistanceDTO(new Code(),new Code(),10.5));
         assertThat(this.json.parseObject(content).getDistance()).isEqualTo(10.5);
 
-        String json = "{\"location1\":{},\"location2\":{},\"distance\":10.5,\"unit\":\"km\"}";
+//        String json = "{\"location1\":{},\"location2\":{},\"distance\":10.5,\"unit\":\"km\"}";
 
 //        ObjectMapper objectMapper = new ObjectMapper();
 //        DistanceDTO distanceDTO = objectMapper.readValue(json, DistanceDTO.class);

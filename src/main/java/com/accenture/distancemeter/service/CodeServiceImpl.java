@@ -13,11 +13,9 @@ import java.util.NoSuchElementException;
 public class CodeServiceImpl implements CodeService {
 
     private CodeRepository codeRepository;
-    private DistanceService distanceCalculator;
 
-    public CodeServiceImpl(CodeRepository codeRepository, DistanceService distanceCalculator) {
+    public CodeServiceImpl(CodeRepository codeRepository) {
         this.codeRepository = codeRepository;
-        this.distanceCalculator = distanceCalculator;
     }
 
     @Override

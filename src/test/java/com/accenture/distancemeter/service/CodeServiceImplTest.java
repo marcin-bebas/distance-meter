@@ -24,12 +24,12 @@ public class CodeServiceImplTest {
     @Mock
     private CodeRepository codeRepository;
     @Mock
-    private DistanceCalculatorImpl distanceCalculator;
+    private DistanceServiceImpl distanceCalculator;
 
     @BeforeEach
     public void setup() {
         codeRepository = Mockito.mock(CodeRepository.class);
-        distanceCalculator = Mockito.mock(DistanceCalculatorImpl.class);
+        distanceCalculator = Mockito.mock(DistanceServiceImpl.class);
         codeService = new CodeServiceImpl(codeRepository, distanceCalculator);
     }
 
@@ -60,23 +60,28 @@ public class CodeServiceImplTest {
     }
 
     @Test
-    public void testGetDistance() {
-        String code1 = "12345";
-        String code2 = "67890";
-        Code code01 = new Code(1L, code1, 52.123, 4.567);
-        Code code02 = new Code(2L, code2, 51.123, 3.456);
-        double expectedDistance = 100.0;
+    public void testGetCode() {
+        String code = "1L12345";
+        Code expectedCode = new Code(1L, code, 52.123, 4.567);
 
-        Mockito.when(codeRepository.findByCode(code1)).thenReturn(Optional.of(code01));
-        Mockito.when(codeRepository.findByCode(code2)).thenReturn(Optional.of(code02));
+        Mockito.when(codeRepository.findByCode(code)).thenReturn(Optional.of(expectedCode));
 
-        Mockito.when(distanceCalculator.calculateDistance(code01.getLatitude(), code01.getLongitude(), code02.getLatitude(), code02.getLongitude())).thenReturn(expectedDistance);
+        Code codeObj = codeService.getCodeByCode(code);
 
-        DistanceDTO distanceDTO = codeService.getDistance(code1, code2);
+        assertEquals(expectedCode, codeObj);
+    }
 
-        assertEquals(code01, distanceDTO.getLocation1());
-        assertEquals(code02, distanceDTO.getLocation2());
-        assertEquals(expectedDistance, distanceDTO.getDistance());
+    @Test
+    void testGetCodeByCode() {
+        String code = "CODE1";
+        Code mockCode = new Code(1L, code, 52.123, 4.567);
+
+        Mockito.when(codeRepository.findByCode(code)).thenReturn(Optional.of(mockCode));
+
+        Code expectedCode = mockCode;
+        Code actualCode = codeService.getCodeByCode(code);
+
+        assertEquals(expectedCode, actualCode);
     }
 
     @Test

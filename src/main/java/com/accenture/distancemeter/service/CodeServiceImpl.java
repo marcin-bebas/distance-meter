@@ -1,21 +1,21 @@
 package com.accenture.distancemeter.service;
 
 import com.accenture.distancemeter.bean.Code;
-import com.accenture.distancemeter.dto.DistanceDTO;
 import com.accenture.distancemeter.repository.CodeRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class CodeServiceImpl implements CodeService {
 
     private CodeRepository codeRepository;
-    private DistanceCalculator distanceCalculator;
+    private DistanceService distanceCalculator;
 
-    public CodeServiceImpl(CodeRepository codeRepository, DistanceCalculator distanceCalculator) {
+    public CodeServiceImpl(CodeRepository codeRepository, DistanceService distanceCalculator) {
         this.codeRepository = codeRepository;
         this.distanceCalculator = distanceCalculator;
     }
@@ -31,24 +31,19 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public Code getCodeById(Long id) {
-        return codeRepository.findById(id).get();
+        return codeRepository.findById(id)
+                .orElseThrow(()-> new NoSuchElementException("NO CODE PRESENT WITH ID = " + id));
     }
 
     @Override
-    public DistanceDTO getDistance(String code1, String code2) {
-        Code code01 = codeRepository.findByCode(code1).get();
-        Code code02 = codeRepository.findByCode(code2).get();
-        DistanceDTO result = DistanceDTO.builder()
-                .location1(code01)
-                .location2(code02)
-                .distance(distanceCalculator.calculateDistance(code01.getLatitude(), code01.getLongitude(), code02.getLatitude(), code02.getLongitude()))
-                .build();
-        return result;
+    public Code getCodeByCode(String code) {
+        return codeRepository.findByCode(code)
+                .orElseThrow(()->new NoSuchElementException("NO CODE PRESENT WITH CODE = " + code));
     }
 
     @Override
     public Code updateCode(Code code) {
-        Code codeDB = codeRepository.findByCode(code.getCode()).get();
+        Code codeDB = getCodeByCode(code.getCode());
         codeDB.setLatitude(code.getLatitude());
         codeDB.setLongitude(code.getLongitude());
         return codeRepository.save(codeDB);

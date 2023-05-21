@@ -27,7 +27,7 @@ public class CodeController {
     }
 
     @GetMapping({"/{id}"})
-    public ResponseEntity<Code> getTodo(@PathVariable Long id) {
+    public ResponseEntity<Code> getCode(@PathVariable Long id) {
         return new ResponseEntity<>(codeService.getCodeById(id), HttpStatus.OK);
     }
 

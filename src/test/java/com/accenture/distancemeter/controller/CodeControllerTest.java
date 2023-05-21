@@ -50,7 +50,7 @@ public class CodeControllerTest {
 
         when(codeService.getCodeById(id)).thenReturn(expectedCode);
 
-        ResponseEntity<Code> response = codeController.getTodo(id);
+        ResponseEntity<Code> response = codeController.getCode(id);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(expectedCode, response.getBody());

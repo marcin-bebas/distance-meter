@@ -1,7 +1,6 @@
 package com.accenture.distancemeter.controller;
 
 import com.accenture.distancemeter.dto.DistanceDTO;
-import com.accenture.distancemeter.service.CodeService;
 import com.accenture.distancemeter.service.DistanceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
